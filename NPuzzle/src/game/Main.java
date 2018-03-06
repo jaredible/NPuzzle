@@ -109,31 +109,23 @@ public class Main extends Canvas implements MouseListener, MouseMotionListener, 
 			if (sx == ex) {
 				if (sy < ey) {
 					i = ey - 1;
-					while (i >= sy) {
-						if (canSwap(sx, i)) isDirty = swap(sx, i);
-						i--;
-					}
+					while (i >= sy)
+						isDirty = swap(sx, i--);
 				} else if (sy > ey) {
 					i = ey + 1;
-					while (i <= sy) {
-						if (canSwap(sx, i)) isDirty = swap(sx, i);
-						i++;
-					}
+					while (i <= sy)
+						isDirty = swap(sx, i++);
 				}
 			}
 			if (sy == ey) {
 				if (sx < ex) {
 					i = ex - 1;
-					while (i >= sx) {
-						if (canSwap(i, sy)) isDirty = swap(i, sy);
-						i--;
-					}
+					while (i >= sx)
+						isDirty = swap(i--, sy);
 				} else if (sx > ex) {
 					i = ex + 1;
-					while (i <= sx) {
-						if (canSwap(i, sy)) isDirty = swap(i, sy);
-						i++;
-					}
+					while (i <= sx)
+						isDirty = swap(i++, sy);
 				}
 			}
 		}
@@ -141,12 +133,15 @@ public class Main extends Canvas implements MouseListener, MouseMotionListener, 
 	}
 
 	private boolean swap(int x, int y) {
-		int tile = tiles[x + y * N];
-		tiles[x + y * N] = 0;
-		tiles[ex + ey * N] = tile;
-		ex = x;
-		ey = y;
-		return true;
+		if (canSwap(x, y)) {
+			int tile = tiles[x + y * N];
+			tiles[x + y * N] = 0;
+			tiles[ex + ey * N] = tile;
+			ex = x;
+			ey = y;
+			return true;
+		}
+		return false;
 	}
 
 	private boolean canSwap(int x, int y) {
