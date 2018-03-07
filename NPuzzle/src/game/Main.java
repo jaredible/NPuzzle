@@ -174,13 +174,14 @@ public class Main extends Canvas implements MouseListener, MouseMotionListener, 
 		if (checkGameBounds(sx, sy)) {
 			if (shift(sx, sy, ex, ey)) {
 				repaint();
-				if (!started) startTime = System.nanoTime();
-				started = true;
+				if (!started) {
+					started = true; // TODO this good here?
+					startTime = System.nanoTime();
+				}
 			}
 			if (hasWon()) {
 				updateFastestScore();
-				if (JOptionPane.showConfirmDialog(this, "You took " + getTimeString() + " seconds! \nWould you like to restart?", "SOLVED!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-					reset();
+				if (JOptionPane.showConfirmDialog(this, "You took " + getTimeString() + " seconds! \nWould you like to restart?", "SOLVED!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) reset();
 				else exit();
 			}
 		}
